@@ -1,0 +1,15 @@
+// Rostra — dev layout
+// left: server (Quarkus) | right: client (Vite) | floating: psql
+
+layout {
+    pane split_direction="vertical" {
+        pane name="server" {
+            command "bash"
+            args "-c" "cd server && ./mvnw quarkus:dev -Dstyle.color=always"
+        }
+        pane name="client" {
+            command "bash"
+            args "-c" "cd client/web && npm run dev --color"
+        }
+    }
+}

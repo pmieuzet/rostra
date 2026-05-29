@@ -1,0 +1,28 @@
+# Rostra — Zellij dev environment
+# Optional alternative to the default justfile for Zellij users.
+#
+# Usage:
+#   just --justfile justfile.zellij dev
+#
+# Requires:
+#   - zellij        (pacman -S zellij)
+#   - postgresql    (pacman -S postgresql-libs)  for the floating DB pane
+
+set dotenv-load := true
+
+default:
+    @just --justfile justfile.zellij --list
+
+# Start Quarkus + Vite + psql in a Zellij session (3-pane layout)
+dev: _copy-env
+    zellij --layout .zellij/dev.kdl
+
+# ─── env ─────────────────────────────────────────────────────────────────────
+
+[private]
+_copy-env:
+    #!/usr/bin/env bash
+    if [ -f .env.example ] && [ ! -f .env ]; then
+        cp .env.example .env
+        echo "📄  .env created from .env.example — fill in any required secrets."
+    fi
